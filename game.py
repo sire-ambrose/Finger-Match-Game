@@ -30,11 +30,6 @@ pdi={"0":Image(source="img0.jpg"),
 "4":Image(source="4.gif"), 
 "5":Image(source="5.gif")}
 
-#file=open("plnum.txt", "r")
-
-
-
-
 class win(Screen):
     def __init__(self,i, **kwargs):
         super().__init__(**kwargs)
@@ -191,28 +186,10 @@ class game(Screen):
         if 0+self.fnum== self.pnum :
             self.popup = Popup(title="YOU WIN", content=Button(text='NEW GAME', on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            w=open("win.txt", 'w')
-            w.write(' You\n Win ')
-            w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            print('GVDTKVDYYJ<GFKU')
-            '''
         elif 0+self.fnum== self.cnum:
             self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            #w=open('win.txt', 'w')
-            #w.write('CPU\nWin')
-            #w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            '''
+
     def press1(self, *args):
         self.bl.remove_widget(self.pfin)
         self.pfin=pdi[str(1)]
@@ -229,28 +206,11 @@ class game(Screen):
         if 1+self.fnum== self.pnum :
             self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            w=open("win.txt", 'w')
-            w.write(' You\n Win ')
-            w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            '''
+
         elif 1+self.fnum== self.cnum:
             self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            w=open('win.txt', 'w')
-            w.write('CPU\nWin')
-            w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            '''
-
+     
     def press2(self, *args):
         self.bl.remove_widget(self.pfin)
         self.pfin=pdi[str(2)]
@@ -268,27 +228,11 @@ class game(Screen):
         if 2+self.fnum== self.pnum :
             self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            w=open("win.txt", 'w')
-            w.write(' You\n Win ')
-            w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            '''
+
         elif 2+self.fnum== self.cnum:
             self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            w=open('win.txt', 'w')
-            w.write('CPU\nWin')
-            w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            '''
+
     def press3(self, *args):
         self.bl.remove_widget(self.pfin)
         self.pfin=pdi[str(3)]
@@ -305,27 +249,10 @@ class game(Screen):
         if 3+self.fnum== self.pnum :
             self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            w=open("win.txt", 'w')
-            w.write(' You\n Win ')
-            w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            '''
+
         elif 3+self.fnum== self.cnum:
             self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            w=open('win.txt', 'w')
-            w.write('CPU\nWin')
-            w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            '''
     def press4(self, *args):
         self.bl.remove_widget(self.pfin)
         self.pfin=pdi[str(4)]
@@ -342,27 +269,9 @@ class game(Screen):
         if 4+self.fnum== self.pnum :
             self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            w=open("win.txt", 'w')
-            w.write(' You\n Win ')
-            w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            '''
         elif 4+self.fnum== self.cnum:
             self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            w=open('win.txt', 'w')
-            w.write('CPU\nWin')
-            w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            '''
     def press5(self, *args):
         self.bl.remove_widget(self.pfin)
         self.pfin=pdi[str(5)]
@@ -379,30 +288,11 @@ class game(Screen):
         if 5+self.fnum== self.pnum :
             self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            w=open("win.txt", 'w')
-            w.write(' You\n Win ')
-            w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            '''
         elif 5+self.fnum== self.cnum:
             self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-            '''
-            w=open('win.txt', 'w')
-            w.write('CPU\nWin')
-            w.close()
-            self.parent.add_widget(win(self.i))
-            self.manager.current='win'+str(self.i)
-            self.bl.clear_widgets()
-            self.clear_widgets()
-            '''
+
     def gopickNum(self,instance):
-        #r.remove_widget(game())
-        #r.add_widget(pickNum())
         count=open('count.txt', 'r')
         j=count.read()
         count.close()
@@ -414,7 +304,6 @@ class game(Screen):
         count=open('count.txt', 'r')
         j=count.read()
         count.close()
-        #r=manager()
         print(j)
         self.parent.parent.parent.add_widget(manager(int(j)))
         try :
