@@ -10,10 +10,8 @@ from kivy.properties import NumericProperty
 from kivy.uix.button import ButtonBehavior
 from kivy.graphics import Color, Rectangle
 from kivy.event import EventDispatcher
-#help(EventDispatcher)
 import random
 from kivy.uix.screenmanager import ScreenManager, Screen
-#help(Popup)
 
 cdi={"0":Image(source="img0.jpg"),
 "1":Image(source="1c.gif"),
@@ -30,50 +28,6 @@ pdi={"0":Image(source="img0.jpg"),
 "4":Image(source="4.gif"), 
 "5":Image(source="5.gif")}
 
-class win(Screen):
-    def __init__(self,i, **kwargs):
-        super().__init__(**kwargs)
-        #self.wpnum=plnum
-        self.i=i
-        self.name='win'+str(i)
-        win=open('win.txt', 'r')
-        rd=win.read()
-        win.close()
-        self.gd=BoxLayout(orientation='vertical')
-        self.add_widget(self.gd)
-        self.gd.add_widget(Label(text=rd))
-        self.gd.add_widget(Button(text="New Game", on_press=self.gopickNum))
-        self.gd.add_widget(Button(text="View Previous", on_press=self.previous))
-    def gopickNum(self,instance):
-        #r.remove_widget(game())
-        #r.add_widget(pickNum())
-        count=open('count.txt', 'r')
-        j=count.read()
-        count.close()
-        i=1+int(j)
-        print(i)
-        count=open('count.txt', 'w')
-        count.write(str(i))
-        count.close()        
-        count=open('count.txt', 'r')
-        j=count.read()
-        count.close()
-        #r=manager()
-        print(j)
-        self.parent.parent.parent.add_widget(manager(int(j)))
-        try :
-            self.parent.parent.clear_widgets()
-        except:
-            pass
-        self.parent.clear_widgets()
-        self.clear_widgets()
-    def previous(self,instance):
-        r.remove_widget(win())
-        self.manager.current='game'+str(self.i)
-        self.clear_widgets()
-        	
-        
-#win=win()
 
 class game(Screen):  
     
@@ -421,9 +375,6 @@ class manager(ScreenManager):
         #self.name='win'
         #self.i=i
         self.add_widget(welcome(self.i))
-       
-#r=manager()
-
 
 class Kivy(App):
     def build(self):
@@ -436,6 +387,7 @@ class Kivy(App):
         r=GridLayout(cols=1)
         r.add_widget(manager(int(self.i)))
         self.root = root=r
+        self.icon='icon.jpg'
   
         return root
     def _update_rect(self, instance, value):
