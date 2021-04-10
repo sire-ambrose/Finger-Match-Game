@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
+from kivy.uix.popup import Popup
 from kivy.uix.image import Image
 from kivy.properties import NumericProperty
 from kivy.uix.button import ButtonBehavior
@@ -40,11 +41,11 @@ pdi={"0":Image(source="img0.jpg"),
 
 
 class win(Screen):
-    def __init__(self, **kwargs):
+    def __init__(self,i, **kwargs):
         super().__init__(**kwargs)
         #self.wpnum=plnum
-        #self.wi=i
-        self.name='win'
+        self.i=i
+        self.name='win'+str(i)
         win=open('win.txt', 'r')
         rd=win.read()
         win.close()
@@ -54,21 +55,40 @@ class win(Screen):
         self.gd.add_widget(Button(text="New Game", on_press=self.gopickNum))
         self.gd.add_widget(Button(text="View Previous", on_press=self.previous))
     def gopickNum(self,instance):
-        	#r.remove_widget(game())
-        	#r.add_widget(pickNum())
-        	self.manager.current='pickNum'
+        #r.remove_widget(game())
+        #r.add_widget(pickNum())
+        count=open('count.txt', 'r')
+        j=count.read()
+        count.close()
+        i=1+int(j)
+        print(i)
+        count=open('count.txt', 'w')
+        count.write(str(i))
+        count.close()        
+        count=open('count.txt', 'r')
+        j=count.read()
+        count.close()
+        #r=manager()
+        print(j)
+        self.parent.parent.parent.add_widget(manager(int(j)))
+        try :
+            self.parent.parent.clear_widgets()
+        except:
+            pass
+        self.parent.clear_widgets()
+        self.clear_widgets()
     def previous(self,instance):
         	r.remove_widget(win())
-        	self.manager.current='game'
+        	self.manager.current='game'+str(self.i)
         	
         
 #win=win()
 
 class game(Screen):  
     
-    def __init__(self,pnum, **kwargs):
+    def __init__(self,pnum,i, **kwargs):
         super().__init__(**kwargs)
-        self.name='game'
+        self.name='game'+str(i)
         self.bl=BoxLayout()
         self.cnum=random.randint(0,10)
         self.bl.orientation="vertical"
@@ -79,7 +99,7 @@ class game(Screen):
         self.cgrid=BoxLayout()
         self.cgrid.orientation="horizontal"
         self.bl.add_widget(self.cgrid)
-
+        self.i=i
         self.cgrid.add_widget(Image(source="5c.gif"))
 
 
@@ -169,6 +189,7 @@ class game(Screen):
     def yyess(self, instance, plnum):
         print('NO OnJHGF')
     def press0(self, *args):
+        win_player='HELLLLLLOOOOOO WORLLLLLD'
         self.bl.remove_widget(self.pfin)
         self.pfin=pdi[str(0)]
         self.bl.add_widget(self.pfin, index=2)
@@ -182,18 +203,26 @@ class game(Screen):
         self.add=Label(text="\n \n"+str(self.fnum)+"\n \n")
         self.bl.add_widget(self.add, index=3)
         if 0+self.fnum== self.pnum :
+            #popup = Popup(title="There is a Winner", content=Label(text=win_player), size_hint=(None, None), size=(200, 200))
+            #popup.open()
             w=open("win.txt", 'w')
             w.write(' You\n Win ')
             w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
             print('GVDTKVDYYJ<GFKU')
         elif 0+self.fnum== self.cnum:
-            w=open('win.txt', 'w')
-            w.write('CPU\nWin')
-            w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            #popup = Popup(title="There is a Winner", content=Label(text=win_player), size_hint=(None, None), size=(200, 200))
+            #popup.open()
+            #w=open('win.txt', 'w')
+            #w.write('CPU\nWin')
+            #w.close()
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
         
     def press1(self, *args):
         self.bl.remove_widget(self.pfin)
@@ -212,14 +241,18 @@ class game(Screen):
             w=open("win.txt", 'w')
             w.write(' You\n Win ')
             w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
         elif 1+self.fnum== self.cnum:
             w=open('win.txt', 'w')
             w.write('CPU\nWin')
             w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
 
 
     def press2(self, *args):
@@ -240,14 +273,18 @@ class game(Screen):
             w=open("win.txt", 'w')
             w.write(' You\n Win ')
             w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
         elif 2+self.fnum== self.cnum:
             w=open('win.txt', 'w')
             w.write('CPU\nWin')
             w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
 
         
 
@@ -268,14 +305,18 @@ class game(Screen):
             w=open("win.txt", 'w')
             w.write(' You\n Win ')
             w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
         elif 3+self.fnum== self.cnum:
             w=open('win.txt', 'w')
             w.write('CPU\nWin')
             w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
         
     def press4(self, *args):
         self.bl.remove_widget(self.pfin)
@@ -294,14 +335,18 @@ class game(Screen):
             w=open("win.txt", 'w')
             w.write(' You\n Win ')
             w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
         elif 4+self.fnum== self.cnum:
             w=open('win.txt', 'w')
             w.write('CPU\nWin')
             w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
     def press5(self, *args):
         self.bl.remove_widget(self.pfin)
         self.pfin=pdi[str(5)]
@@ -319,26 +364,30 @@ class game(Screen):
             w=open("win.txt", 'w')
             w.write(' You\n Win ')
             w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
         elif 5+self.fnum== self.cnum:
             w=open('win.txt', 'w')
             w.write('CPU\nWin')
             w.close()
-            r.add_widget(win())
-            self.manager.current='win'
+            self.parent.add_widget(win(self.i))
+            self.manager.current='win'+str(self.i)
+            self.bl.clear_widgets()
+            self.clear_widgets()
            
 
 class pickNum(Screen):
     plnum=NumericProperty(12)
-    def __init__(self, **kwargs):
+    def __init__(self,i, **kwargs):
         super(pickNum, self).__init__(**kwargs)
         self.mbox= BoxLayout(orientation='vertical')
         self.add_widget(self.mbox)
         self.mbox.add_widget(Label(text='Pick Your Number'))
         self.mgrid=GridLayout()
         self.mgrid.cols=3
-        
+        self.i=i
         self.btn10=Button(text='10',on_press=self.gotofirst10)
         self.mgrid.add_widget(self.btn10)
         self.btn9=Button(text='9',on_press=self.gotofirst9)
@@ -364,9 +413,10 @@ class pickNum(Screen):
         self.mgrid.add_widget(self.btn0)
         self.btnn=Button(text='')
         self.mgrid.add_widget(self.btnn)
-        self.name='pickNum'
+        self.name='pickNum'+str(i)
 
     def gotofirst10(self,instance):
+        '''
         count=open('count.txt', 'r')
         j=count.read()
         count.close()
@@ -375,9 +425,11 @@ class pickNum(Screen):
         count=open('count.txt', 'w')
         count.write(str(i))
         count.close()
-        r.add_widget(game(pnum=10))
-        self.manager.current='game'
+        '''
+        self.parent.add_widget(game(i=self.i, pnum=10))
+        self.manager.current='game'+str(self.i)
     def gotofirst9(self,instance):
+        '''
         count=open('count.txt', 'r')
         j=count.read()
         count.close()
@@ -386,44 +438,46 @@ class pickNum(Screen):
         count=open('count.txt', 'w')
         count.write(str(i))
         count.close()
-        r.add_widget(game(pnum=9))
-        self.manager.current='game'
+        '''
+        self.parent.add_widget(game(i=self.i, pnum=9))
+        self.manager.current='game'+str(self.i)
     def gotofirst8(self,instance):
-        r.add_widget(game(pnum=8))
-        self.manager.current='game'
+        self.parent.add_widget(game(i=self.i, pnum=8))
+        self.manager.current='game'+str(self.i)
     def gotofirst7(self,instance):
-        r.add_widget(game(pnum=7))
-        self.manager.current='game'
+        self.parent.add_widget(game(i=self.i, pnum=7))
+        self.manager.current='game'+str(self.i)
     def gotofirst6(self,instance):
-        r.add_widget(game(pnum=6))
-        self.manager.current='game'
+        self.parent.add_widget(game(i=self.i, pnum=6))
+        self.manager.current='game'+str(self.i)
     def gotofirst5(self,instance):
-        r.add_widget(game(pnum=5))
-        self.manager.current='game'
+        self.parent.add_widget(game(i=self.i, pnum=5))
+        self.manager.current='game'+str(self.i)
     def gotofirst4(self,instance):
-        r.add_widget(game(pnum=4))
-        self.manager.current='game'
+        self.parent.add_widget(game(i=self.i, pnum=4))
+        self.manager.current='game'+str(self.i)
     def gotofirst3(self,instance):
-        r.add_widget(game(pnum=3))
-        self.manager.current='game'
+        self.parent.add_widget(game(i=self.i, pnum=3))
+        self.manager.current='game'+str(self.i)
     def gotofirst2(self,instance):
-        r.add_widget(game(pnum=2))
-        self.manager.current='game'
+        self.parent.add_widget(game(i=self.i, pnum=2))
+        self.manager.current='game'+str(self.i)
     def gotofirst1(self,instance):
-        r.add_widget(game(pnum=1))
-        self.manager.current='game'
+        self.parent.add_widget(game(i=self.i, pnum=1))
+        self.manager.current='game'+str(self.i)
     def gotofirst0(self,instance):
-        r.add_widget(game(pnum=0))
-        self.manager.current='game'
+        self.parent.add_widget(game(i=self.i, pnum=0))
+        self.manager.current='game'+str(self.i)
     def on_plnum(self, instance, plnum):
         print(plnum)
         return plnum
 #pick=pickNum()
 class welcome(Screen):
-    def __init__(self, **kwargs):
+    def __init__(self, i, **kwargs):
         super().__init__(**kwargs)
-        self.name='welcome'
-        print(self.size)
+        self.name='welcome'+str(i)
+        #print(self.size)
+        self.i=i
         self.add_widget(cover)
         self.gd=FloatLayout()
         self.add_widget(self.gd)
@@ -431,16 +485,20 @@ class welcome(Screen):
         self.gd.add_widget(Button(text="Play", on_press=self.gopickNum, opacity=0.5, pos_hint={'x':0.5,'y':0.3},size_hint=(0.1,0.1)))
         #self.gd.add_widget(Button(text="View Previous", on_press=self.previous))
     def gopickNum(self,instance):
-        	r.add_widget(pickNum())
-        	#r.remove_widget(win())
-        	self.manager.current='pickNum'
+        self.parent.add_widget(pickNum(self.i))
+        #r.remove_widget(win())
+        self.manager.current='pickNum'+str(self.i)
+        self.clear_widgets()    
 
 class manager(ScreenManager):
-    def __init__(self, **kwargs):
+    def __init__(self, i,**kwargs):
         super(manager, self).__init__(**kwargs)
-        self.add_widget(welcome())
+        self.i=i
+        #self.name='win'
+        #self.i=i
+        self.add_widget(welcome(self.i))
        
-r=manager()
+#r=manager()
 
 
 class Kivy(App):
@@ -448,12 +506,19 @@ class Kivy(App):
         count=open('count.txt', 'w')
         count.write(str(0))
         count.close()
+        count=open('count.txt', 'r')
+        self.i=count.read()
+        count.close()
+        r=GridLayout(cols=1)
+        r.add_widget(manager(int(self.i)))
         self.root = root=r
+        '''
         root.bind(size=self._update_rect, pos=self._update_rect)
 
         with root.canvas.before:
             Color(0, 0, 0, 0)
             self.rect = Rectangle(size=root.size, pos=root.pos)
+        '''
         return root
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
