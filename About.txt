@@ -1,4 +1,5 @@
 Finger-Match-Game 
+
 At the beginning of the game , 
 you pick a number between 1 to 10 and CPU also pick a number between 1 to 10
 
@@ -24,3 +25,16 @@ that is , until s=p or s=c.
 
 Enjoy!
 
+Touch Screen To Go Back
+
+Developer
+Sire 
+08118499120
+ikpeleambroseobinna@gmail.com
+
+Finger Match Picture by
+Cyborg
+09069561623
+mccoytravie32@gmai.com 
+
+THIS GAME IS STILL IN DEVELOPMENT 
