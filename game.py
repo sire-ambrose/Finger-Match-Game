@@ -278,7 +278,7 @@ class pickto(Screen):
         self.pnum=pnum
         self.add_widget(self.gl)
         self.gl.add_widget(Button(text='Player vs CPU', on_press=self.single))
-        self.gl.add_widget(Button(text='Player vs CPU', on_press=self.tourn))
+        self.gl.add_widget(Button(text='Tournament', on_press=self.tourn))
     def single(self, instance):
         self.parent.add_widget(game(i=self.i, pnum=self.pnum))
         self.manager.current='game'+str(self.i)
@@ -624,11 +624,33 @@ class welcome(Screen):
         self.add_widget(cover)
         self.gd=FloatLayout()
         self.add_widget(self.gd)
-        self.gd.add_widget(Button(text="Play", on_press=self.gopickNum, opacity=0.5, pos_hint={'x':0.5,'y':0.3},size_hint=(0.1,0.1)))
+        self.gd.add_widget(Button(text="Play", on_press=self.gopickNum, opacity=0.6, pos_hint={'x':0.5,'y':0.3},size_hint=(0.1,0.1)))
+        self.gd.add_widget(Button(text="About", on_press=self.abt, opacity=0.6, pos_hint={'x':0.5,'y':0.1},size_hint=(0.1,0.1)))
     def gopickNum(self,instance):
         self.parent.add_widget(pickNum(self.i))
         self.manager.current='pickNum'+str(self.i)
-        self.clear_widgets()    
+        self.clear_widgets()
+
+    def abt(self,instance):
+        self.parent.add_widget(about())
+        self.manager.current='about'
+
+class about(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.name='about'
+        self.gd=GridLayout(cols=1)
+        self.add_widget(self.gd)
+        file=open('About.txt', 'r')
+        abt=file.read()
+        file.close()
+        self.gd.add_widget(Label(text=abt))
+        file=open('count.txt', 'r')
+        self.i=int(file.read())
+        file.close()
+    def on_touch_down(self,touch):
+        #self.parent.add_widget(welcome(self.i))
+        self.manager.current='welcome'+str(self.i)  
 
 class manager(ScreenManager):
     def __init__(self, i,**kwargs):
