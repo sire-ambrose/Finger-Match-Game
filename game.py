@@ -9,7 +9,6 @@ from kivy.uix.image import Image
 from kivy.properties import NumericProperty
 from kivy.uix.button import ButtonBehavior
 from kivy.graphics import Color, Rectangle
-from kivy.event import EventDispatcher
 import random
 from kivy.uix.screenmanager import ScreenManager, Screen
 
@@ -28,11 +27,18 @@ pdi={"0":Image(source="img0.jpg"),
 "4":Image(source="4.gif"), 
 "5":Image(source="5.gif")}
 
-
-class game(Screen):  
+'''
+class bb(ButtonBehavior, Image):
+    def __init__(self, name, **kwargs):
+        super().__init__(**kwargs)
+        self.source=str(name)+".gif"
+    def on_press(self, instance):
+        pass
+''' 
+class game(Screen, ButtonBehavior, Image):  
     
     def __init__(self,pnum,i, **kwargs):
-        super().__init__(**kwargs)
+        super(game,self).__init__(**kwargs)
         self.name='game'+str(i)
         self.bl=BoxLayout()
         self.cnum=random.randint(0,10)
@@ -68,61 +74,32 @@ class game(Screen):
         self.bl.add_widget(self.pfin)
 
         #DISPLAY player CHOOSEN NUMBER
-        self.plbl= Label(text=str(self.pnum), color=(1,1,1,1), )
-        #self.plbl= Label(text=str(9), color=(0,0,0,1), )
+        self.plbl= Label(text=str(self.pnum), color=(1,1,1,1))
         self.bl.add_widget(self.plbl)
 
         #player finger grid
         self.pgrid=BoxLayout()
-        self.pgrid.padding=(1,0.5,0.5,0.5)
-        self.pgrid.spacing=100
         self.pgrid.orientation="horizontal"
         self.bl.add_widget(self.pgrid)
         
-        self.p0=Button(size_hint=(0.85,1)) 
-        self.p0.background_down="0.gif"
-        self.p0.background_normal="0.gif"
-        self.p0.background_disabled="0.gif"
-        self.p0.on_press=self.press0
+        self.p0=Image(source="0.gif")
         self.pgrid.add_widget(self.p0)
 
-        self.p1=Button(size_hint=(0.8,1)) 
-        self.p1.background_down="1.gif"
-        self.p1.background_normal="1.gif"
-        self.p1.background_disabled="1.gif"
-        self.p1.on_press=self.press1
+        self.p1=Image(source="1.gif")
         self.pgrid.add_widget(self.p1)
         
-        self.p2=Button(size_hint=(0.8,1)) 
-        self.p2.background_down="2.gif"
-        self.p2.background_normal="2.gif"
-        self.p2.background_disabled="2.gif"
-        self.p2.on_press=self.press2
+        self.p2=Image(source="2.gif")
         self.pgrid.add_widget(self.p2)
 
-        self.p3=Button(size_hint=(0.8,1)) 
-        self.p3.background_down="3.gif"
-        self.p3.background_normal="3.gif"
-        self.p3.background_disabled="3.gif"
-        self.p3.on_press=self.press3
+        self.p3=Image(source="3.gif")
         self.pgrid.add_widget(self.p3)
 
-        self.p4=Button(size_hint=(0.8,1)) 
-        self.p4.background_down="4.gif"
-        self.p4.background_normal="4.gif"
-        self.p4.background_disabled="4.gif"
-        self.p4.on_press=self.press4
+        self.p4=Image(source="4.gif")
         self.pgrid.add_widget(self.p4)
 
-        self.p5=Button(size_hint=(0.8,1)) 
-        self.p5.background_down="5.gif"
-        self.p5.background_normal="5.gif"
-        self.p5.background_disabled="5.gif"
-        self.p5.on_press=self.press5
+        self.p5=Image(source="5.gif")
+        #self.p5.on_press=self.press5
         self.pgrid.add_widget(self.p5)
-        with self.canvas.before:
-            Color(1,0,1,0)
-            Rectangle()
     def press0(self, *args):
         
         self.bl.remove_widget(self.pfin)
@@ -245,6 +222,23 @@ class game(Screen):
         elif 5+self.fnum== self.cnum:
             self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
+
+    def on_press(self):
+        print(self.last_touch.spos)
+        touch=self.last_touch.spos
+        if 0.86< touch[0] <1 and 0< touch[1] <0.15 :
+            self.press5()
+        elif  0.7< touch[0] <0.78 and 0< touch[1] <0.15 :
+            self.press4()
+        elif  0.54< touch[0] <0.62 and 0< touch[1] <0.15 :
+            self.press3()
+        elif  0.37< touch[0] <0.45 and 0< touch[1] <0.15 :
+            self.press2()
+        elif  0.21< touch[0] <0.28 and 0< touch[1] <0.15 :
+            self.press1()
+        elif  0< touch[0] <0.12 and 0< touch[1] <0.15 :
+            self.press0()
+        
 
     def gopickNum(self,instance):
         count=open('count.txt', 'r')
