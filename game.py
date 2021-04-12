@@ -39,12 +39,14 @@ class game(Screen, ButtonBehavior, Image):
     
     def __init__(self,pnum,i, **kwargs):
         super(game,self).__init__(**kwargs)
+        self.pnum=pnum
         self.name='game'+str(i)
         self.bl=BoxLayout()
-        self.cnum=random.randint(0,10)
+        choice=list(range(11))
+        choice.remove(self.pnum)
+        self.cnum=choice[random.randint(0,9)]
         self.bl.orientation="vertical"
         self.add_widget(self.bl)
-        self.pnum=pnum
         self.popup=None
         self.cgrid=BoxLayout()
         self.cgrid.orientation="horizontal"
@@ -279,251 +281,6 @@ class pickto(Screen):
         self.clear_widgets()
     def tourn(self, instance):
         pass
-        '''
-        self.parent.add_widget(pickto(i=self.i, pnum=self.pnum))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
-        '''
-class contest(Screen):      
-    def __init__(self,pnum,i, **kwargs):
-        super().__init__(**kwargs)
-        self.name='game'+str(i)
-        self.bl=BoxLayout()
-        self.cnum=random.randint(0,10)
-        self.bl.orientation="vertical"
-        self.add_widget(self.bl)
-        self.pnum=pnum
-        self.popup=None
-        self.cgrid=BoxLayout()
-        self.cgrid.orientation="horizontal"
-        self.bl.add_widget(self.cgrid)
-        self.i=i
-        self.cgrid.add_widget(Image(source="5c.gif"))
-        self.cgrid.add_widget(Image(source="4c.gif"))
-        self.cgrid.add_widget(Image(source="3c.gif"))
-        self.cgrid.add_widget(Image(source="2c.gif"))
-        self.cgrid.add_widget(Image(source="1c.gif"))
-        self.cgrid.add_widget(Image(source="img0.jpg"))
-
-        #DISPLAY COMPUTER CHOOSEN NUMBER
-        self.clbl= Label(text=str(self.cnum), color=(1,1,1,1), )
-        self.bl.add_widget(self.clbl)
-        
-        #display computer finger on table
-        self.cfin=Label()
-        self.bl.add_widget(self.cfin)
-
-        #show the sum of computer finger and player finger
-        self.add=Label(text="\n \n"+"  "+"\n \n")
-        self.bl.add_widget(self.add)
-
-        #display player finger on table
-        self.pfin=Label()
-        self.bl.add_widget(self.pfin)
-
-        #DISPLAY player CHOOSEN NUMBER
-        self.plbl= Label(text=str(self.pnum), color=(1,1,1,1), )
-        #self.plbl= Label(text=str(9), color=(0,0,0,1), )
-        self.bl.add_widget(self.plbl)
-
-        #player finger grid
-        self.pgrid=BoxLayout()
-        self.pgrid.padding=(1,0.5,0.5,0.5)
-        self.pgrid.spacing=100
-        self.pgrid.orientation="horizontal"
-        self.bl.add_widget(self.pgrid)
-        
-        self.p0=Button(size_hint=(0.85,1)) 
-        self.p0.background_down="0.gif"
-        self.p0.background_normal="0.gif"
-        self.p0.background_disabled="0.gif"
-        self.p0.on_press=self.press0
-        self.pgrid.add_widget(self.p0)
-
-        self.p1=Button(size_hint=(0.8,1)) 
-        self.p1.background_down="1.gif"
-        self.p1.background_normal="1.gif"
-        self.p1.background_disabled="1.gif"
-        self.p1.on_press=self.press1
-        self.pgrid.add_widget(self.p1)
-        
-        self.p2=Button(size_hint=(0.8,1)) 
-        self.p2.background_down="2.gif"
-        self.p2.background_normal="2.gif"
-        self.p2.background_disabled="2.gif"
-        self.p2.on_press=self.press2
-        self.pgrid.add_widget(self.p2)
-
-        self.p3=Button(size_hint=(0.8,1)) 
-        self.p3.background_down="3.gif"
-        self.p3.background_normal="3.gif"
-        self.p3.background_disabled="3.gif"
-        self.p3.on_press=self.press3
-        self.pgrid.add_widget(self.p3)
-
-        self.p4=Button(size_hint=(0.8,1)) 
-        self.p4.background_down="4.gif"
-        self.p4.background_normal="4.gif"
-        self.p4.background_disabled="4.gif"
-        self.p4.on_press=self.press4
-        self.pgrid.add_widget(self.p4)
-
-        self.p5=Button(size_hint=(0.8,1)) 
-        self.p5.background_down="5.gif"
-        self.p5.background_normal="5.gif"
-        self.p5.background_disabled="5.gif"
-        self.p5.on_press=self.press5
-        self.pgrid.add_widget(self.p5)
-        with self.canvas.before:
-            Color(1,0,1,0)
-            Rectangle()
-    def press0(self, *args):
-        
-        self.bl.remove_widget(self.pfin)
-        self.pfin=pdi[str(0)]
-        self.bl.add_widget(self.pfin, index=2)
-
-        self.fnum=random.randint(0,5)
-        self.bl.remove_widget(self.cfin)
-        self.cfin=cdi[str(self.fnum)]
-        self.bl.add_widget(self.cfin, index=4)
-
-        self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(self.fnum)+"\n \n")
-        self.bl.add_widget(self.add, index=3)
-        if 0+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='NEW GAME', on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-        elif 0+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-
-    def press1(self, *args):
-        self.bl.remove_widget(self.pfin)
-        self.pfin=pdi[str(1)]
-        self.bl.add_widget(self.pfin, index=2)
-        
-        self.fnum=random.randint(0,5)
-        self.bl.remove_widget(self.cfin)
-        self.cfin=cdi[str(self.fnum)]
-        self.bl.add_widget(self.cfin, index=4)
-
-        self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(1+self.fnum)+"\n \n")
-        self.bl.add_widget(self.add, index=3)
-        if 1+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-
-        elif 1+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-     
-    def press2(self, *args):
-        self.bl.remove_widget(self.pfin)
-        self.pfin=pdi[str(2)]
-        self.bl.add_widget(self.pfin, index=2)
-
-        
-        self.fnum=random.randint(0,5)
-        self.bl.remove_widget(self.cfin)
-        self.cfin=cdi[str(self.fnum)]
-        self.bl.add_widget(self.cfin, index=4)
-
-        self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(2+self.fnum)+"\n \n")
-        self.bl.add_widget(self.add, index=3)
-        if 2+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-
-        elif 2+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-
-    def press3(self, *args):
-        self.bl.remove_widget(self.pfin)
-        self.pfin=pdi[str(3)]
-        self.bl.add_widget(self.pfin, index=2)
-
-        self.fnum=random.randint(0,5)
-        self.bl.remove_widget(self.cfin)
-        self.cfin=cdi[str(self.fnum)]
-        self.bl.add_widget(self.cfin, index=4)
-
-        self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(3+self.fnum)+"\n \n")
-        self.bl.add_widget(self.add, index=3)
-        if 3+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-
-        elif 3+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-    def press4(self, *args):
-        self.bl.remove_widget(self.pfin)
-        self.pfin=pdi[str(4)]
-        self.bl.add_widget(self.pfin, index=2)
-
-        self.fnum=random.randint(0,5)
-        self.bl.remove_widget(self.cfin)
-        self.cfin=cdi[str(self.fnum)]
-        self.bl.add_widget(self.cfin, index=4)
-
-        self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(4+self.fnum)+"\n \n")
-        self.bl.add_widget(self.add, index=3)
-        if 4+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-        elif 4+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-    def press5(self, *args):
-        self.bl.remove_widget(self.pfin)
-        self.pfin=pdi[str(5)]
-        self.bl.add_widget(self.pfin, index=2)
-
-        self.fnum=random.randint(0,5)
-        self.bl.remove_widget(self.cfin)
-        self.cfin=cdi[str(self.fnum)]
-        self.bl.add_widget(self.cfin, index=4)
-
-        self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(5+self.fnum)+"\n \n")
-        self.bl.add_widget(self.add, index=3)
-        if 5+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-        elif 5+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-
-    def gopickNum(self,instance):
-        count=open('count.txt', 'r')
-        j=count.read()
-        count.close()
-        i=1+int(j)
-        print(i)
-        count=open('count.txt', 'w')
-        count.write(str(i))
-        count.close()        
-        count=open('count.txt', 'r')
-        j=count.read()
-        count.close()
-        print(j)
-        self.parent.parent.parent.add_widget(manager(int(j)))
-        try :
-            self.parent.parent.clear_widgets()
-        except:
-            pass
-        self.parent.clear_widgets()
-        self.clear_widgets()
-        self.bl.clear_widgets()
-        self.popup.dismiss()
-           
-
 
 
 class pickNum(Screen):
@@ -638,7 +395,7 @@ class about(Screen):
         file=open('About.txt', 'r')
         abt=file.read()
         file.close()
-        self.gd.add_widget(Label(text=abt))
+        self.gd.add_widget(Label(text=abt, size_hint=self.size))
         file=open('count.txt', 'r')
         self.i=int(file.read())
         file.close()
