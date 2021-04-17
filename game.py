@@ -69,29 +69,10 @@ class game(ButtonBehavior,Screen):
         self.pgrid.add_widget(Image(source="3.gif"))
         self.pgrid.add_widget(Image(source="4.gif"))
         self.pgrid.add_widget(Image(source="5.gif"))
-    def press0(self, *args):
+    def press(self, constant):
+        constant=constant
         self.bl.remove_widget(self.pfin)
-        self.pfin=Image(source="0.gif")
-        self.bl.add_widget(self.pfin, index=2)
-
-        self.fnum=random.randint(0,5)
-        self.bl.remove_widget(self.cfin)
-        self.cfin=Image(source=str(self.fnum)+'c.gif')
-        self.bl.add_widget(self.cfin, index=4)
-
-        self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(self.fnum)+"\n \n",font_size=self.font)
-        self.bl.add_widget(self.add, index=3)
-        if 0+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='NEW GAME', on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-        elif 0+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-
-    def press1(self, *args):
-        self.bl.remove_widget(self.pfin)
-        self.pfin=Image(source="1.gif")
+        self.pfin=Image(source=str(constant)+".gif")
         self.bl.add_widget(self.pfin, index=2)
         
         self.fnum=random.randint(0,5)
@@ -109,103 +90,22 @@ class game(ButtonBehavior,Screen):
         elif 1+self.fnum== self.cnum:
             self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
-     
-    def press2(self, *args):
-        self.bl.remove_widget(self.pfin)
-        self.pfin=Image(source="2.gif")
-        self.bl.add_widget(self.pfin, index=2)
-
-        
-        self.fnum=random.randint(0,5)
-        self.bl.remove_widget(self.cfin)
-        self.cfin=Image(source=str(self.fnum)+'c.gif')
-        self.bl.add_widget(self.cfin, index=4)
-
-        self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(2+self.fnum)+"\n \n",font_size=self.font)
-        self.bl.add_widget(self.add, index=3)
-        if 2+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-
-        elif 2+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-
-    def press3(self, *args):
-        self.bl.remove_widget(self.pfin)
-        self.pfin=Image(source="3.gif")
-        self.bl.add_widget(self.pfin, index=2)
-
-        self.fnum=random.randint(0,5)
-        self.bl.remove_widget(self.cfin)
-        self.cfin=Image(source=str(self.fnum)+'c.gif')
-        self.bl.add_widget(self.cfin, index=4)
-
-        self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(3+self.fnum)+"\n \n",font_size=self.font)
-        self.bl.add_widget(self.add, index=3)
-        if 3+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-
-        elif 3+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-    def press4(self, *args):
-        self.bl.remove_widget(self.pfin)
-        self.pfin=Image(source="4.gif")
-        self.bl.add_widget(self.pfin, index=2)
-
-        self.fnum=random.randint(0,5)
-        self.bl.remove_widget(self.cfin)
-        self.cfin=Image(source=str(self.fnum)+'c.gif')
-        self.bl.add_widget(self.cfin, index=4)
-
-        self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(4+self.fnum)+"\n \n",font_size=self.font)
-        self.bl.add_widget(self.add, index=3)
-        if 4+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-        elif 4+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-    def press5(self, *args):
-        self.bl.remove_widget(self.pfin)
-        self.pfin=Image(source="5.gif")
-        self.bl.add_widget(self.pfin, index=2)
-
-        self.fnum=random.randint(0,5)
-        self.bl.remove_widget(self.cfin)
-        self.cfin=Image(source=str(self.fnum)+'c.gif')
-        self.bl.add_widget(self.cfin, index=4)
-
-        self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(5+self.fnum)+"\n \n",font_size=self.font)
-        self.bl.add_widget(self.add, index=3)
-        if 5+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
-        elif 5+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
-            self.popup.open()
 
     def on_press(self):
         print(self.last_touch.spos)
         touch=self.last_touch.spos
         if 0.86< touch[0] <1 and 0< touch[1] <0.15 :
-            self.press5()
+            self.press(5)
         elif  0.7< touch[0] <0.78 and 0< touch[1] <0.15 :
-            self.press4()
+            self.press(4)
         elif  0.54< touch[0] <0.62 and 0< touch[1] <0.15 :
-            self.press3()
+            self.press(3)
         elif  0.37< touch[0] <0.45 and 0< touch[1] <0.15 :
-            self.press2()
+            self.press(2)
         elif  0.21< touch[0] <0.28 and 0< touch[1] <0.15 :
-            self.press1()
+            self.press(1)
         elif  0< touch[0] <0.12 and 0< touch[1] <0.15 :
-            self.press0()
+            self.press(0)
         
 
     def gopickNum(self,instance):
