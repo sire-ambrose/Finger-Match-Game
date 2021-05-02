@@ -14,7 +14,6 @@ from kivmob import KivMob
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 class CoverImage(CoverBehavior, Image):
-
     def __init__(self, **kwargs):
         super(CoverImage, self).__init__(**kwargs)
         texture = self._coreimage.texture
@@ -1032,84 +1031,7 @@ class pickNum(ButtonBehavior,Screen):
         super(pickNum, self).__init__(**kwargs)
         self.add_widget(CoverImage(source="picknum.jpg"))
         self.i=i
-        '''
-        self.mbox= BoxLayout(orientation='vertical')
-        self.add_widget(self.mbox)
-        self.mbox.add_widget(Label(text='Pick Your Number'))
-        self.mgrid=GridLayout()
-        self.mgrid.cols=3
-        
-        self.btn10=Button(text='10',on_press=self.gotofirst10)
-        self.mgrid.add_widget(self.btn10)
-        self.btn9=Button(text='9',on_press=self.gotofirst9)
-        self.mgrid.add_widget(self.btn9)
-        self.btn8=Button(text='8',on_press=self.gotofirst8)
-        self.mgrid.add_widget(self.btn8)
-        self.btn7=Button(text='7',on_press=self.gotofirst7)
-        self.mgrid.add_widget(self.btn7)
-        self.btn6=Button(text='6',on_press=self.gotofirst6)
-        self.mgrid.add_widget(self.btn6)
-        self.btn5=Button(text='5',on_press=self.gotofirst5)
-        self.mgrid.add_widget(self.btn5)
-        self.btn4=Button(text='4',on_press=self.gotofirst4)
-        self.mgrid.add_widget(self.btn4)
-        self.btn3=Button(text='3',on_press=self.gotofirst3)
-        self.mgrid.add_widget(self.btn3)
-        self.btn2=Button(text='2',on_press=self.gotofirst2)
-        self.mgrid.add_widget(self.btn2)
-        self.btn1=Button(text='1',on_press=self.gotofirst1)
-        self.mgrid.add_widget(self.btn1)
-        self.mbox.add_widget(self.mgrid)
-        self.btn0=Button(text='0',on_press=self.gotofirst0)
-        self.mgrid.add_widget(self.btn0)
-        self.btnn=Button(text='')
-        self.mgrid.add_widget(self.btnn)
-        '''
         self.name='pickNum'+str(i)
-    def gotofirst10(self):
-        self.parent.add_widget(pickto(i=self.i, pnum=10))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
-    def gotofirst9(self):
-        self.parent.add_widget(pickto(i=self.i, pnum=9))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
-    def gotofirst8(self):
-        self.parent.add_widget(pickto(i=self.i, pnum=8))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
-    def gotofirst7(self):
-        self.parent.add_widget(pickto(i=self.i, pnum=7))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
-    def gotofirst6(self):
-        self.parent.add_widget(pickto(i=self.i, pnum=6))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
-    def gotofirst5(self):
-        self.parent.add_widget(pickto(i=self.i, pnum=5))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
-    def gotofirst4(self):
-        self.parent.add_widget(pickto(i=self.i, pnum=4))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
-    def gotofirst3(self):
-        self.parent.add_widget(pickto(i=self.i, pnum=3))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
-    def gotofirst2(self):
-        self.parent.add_widget(pickto(i=self.i, pnum=2))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
-    def gotofirst1(self):
-        self.parent.add_widget(pickto(i=self.i, pnum=1))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
-    def gotofirst0(self):
-        self.parent.add_widget(pickto(i=self.i, pnum=0))
-        self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()
     def pikk(self,number):
         number=number
         self.parent.add_widget(pickto(i=self.i, pnum=number))
@@ -1118,25 +1040,25 @@ class pickNum(ButtonBehavior,Screen):
     def on_press(self):
         print(self.last_touch.spos)
         if 0.035<self.last_touch.spos[0]<0.125 and 0.36<self.last_touch.spos[1]<0.47 :
-            self.gotofirst1()
+            self.pikk(1)
         elif 0.26<self.last_touch.spos[0]<0.35 and 0.36<self.last_touch.spos[1]<0.47 :
-            self.gotofirst8()
+            self.pikk(8)
         elif 0.46<self.last_touch.spos[0]<0.55 and 0.36<self.last_touch.spos[1]<0.47 :
-            self.gotofirst5()
+            self.pikk(5)
         elif 0.69<self.last_touch.spos[0]<0.78 and 0.36<self.last_touch.spos[1]<0.47 :
-            self.gotofirst10()
+            self.pikk(10)
         elif 0.85<self.last_touch.spos[0]<1 and 0.36<self.last_touch.spos[1]<0.47 :
-            self.gotofirst3()
+            self.pikk(3)
         elif 0.035<self.last_touch.spos[0]<0.125 and 0.17<self.last_touch.spos[1]<0.27 :
-            self.gotofirst4()
+            self.pikk(4)
         elif 0.26<self.last_touch.spos[0]<0.35 and 0.17<self.last_touch.spos[1]<0.27 :
-            self.gotofirst2()
+            self.pikk(2)
         elif 0.46<self.last_touch.spos[0]<0.55 and 0.17<self.last_touch.spos[1]<0.27 :
-            self.gotofirst7()
+            self.pikk(7)
         elif 0.69<self.last_touch.spos[0]<0.78 and 0.17<self.last_touch.spos[1]<0.27 :
-            self.gotofirst9()
+            self.pikk(9)
         elif 0.85<self.last_touch.spos[0]<1 and 0.17<self.last_touch.spos[1]<0.27 :
-            self.gotofirst6()
+            self.pikk(6)
 
     
 class welcome(Screen):
