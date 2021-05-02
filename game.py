@@ -6,11 +6,32 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.image import Image
-from kivy.properties import NumericProperty
 from kivy.uix.button import ButtonBehavior
+from kivy.uix.behaviors import CoverBehavior
 from kivy.graphics import Color, Rectangle
 import random
+from kivmob import KivMob
 from kivy.uix.screenmanager import ScreenManager, Screen
+
+class CoverImage(CoverBehavior, Image):
+
+    def __init__(self, **kwargs):
+        super(CoverImage, self).__init__(**kwargs)
+        texture = self._coreimage.texture
+        self.reference_size = texture.size
+        self.texture = texture
+class winImg(ButtonBehavior,Image): 
+    def __init__(self,i, **kwargs):
+        super(winImg,self).__init__(**kwargs)
+        
+class CovAbt(ButtonBehavior,Label): 
+    def __init__(self, **kwargs):
+        super(CovAbt,self).__init__(**kwargs)
+        file=open('About.txt', 'r')
+        abt=file.read()
+        file.close()
+        self.text=abt
+
 
 class game(ButtonBehavior,Screen):     
     def __init__(self,pnum,i, **kwargs):
@@ -21,7 +42,7 @@ class game(ButtonBehavior,Screen):
         diff=open('difficulty.txt', 'r')
         present=diff.read()
         diff.close()
-        self.font=40
+        self.font=30
         choice=list(range(11))
         choice.remove(self.pnum)
         self.cnum=choice[random.randint(0,9)]
@@ -69,26 +90,45 @@ class game(ButtonBehavior,Screen):
         self.pgrid.add_widget(Image(source="3.gif"))
         self.pgrid.add_widget(Image(source="4.gif"))
         self.pgrid.add_widget(Image(source="5.gif"))
+
+
     def press(self, constant):
         constant=constant
+        reason=open('constant.txt', 'r')
+        remove=reason.read()
+        reason.close()
+
+        reason=open('constant.txt', 'w')
+        reason.write(str(abs(constant-self.pnum)))
+        reason.close() 
+
+        remember=list(range(6))
+        
+        try :
+            remember.remove(int(remove))
+            self.fnum=remember[random.randint(0,4)]
+        except ValueError :
+            self.fnum=random.randint(0,5)
+
         self.bl.remove_widget(self.pfin)
         self.pfin=Image(source=str(constant)+".gif")
         self.bl.add_widget(self.pfin, index=2)
         
-        self.fnum=random.randint(0,5)
+        #self.fnum=random.randint(0,5)
         self.bl.remove_widget(self.cfin)
         self.cfin=Image(source=str(self.fnum)+'c.gif')
         self.bl.add_widget(self.cfin, index=4)
 
         self.bl.remove_widget(self.add)
-        self.add=Label(text="\n \n"+str(1+self.fnum)+"\n \n",font_size=self.font)
+        self.add=Label(text="\n \n"+str(constant+self.fnum)+"\n \n",font_size=self.font)
         self.bl.add_widget(self.add, index=3)
-        if 1+self.fnum== self.pnum :
-            self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
+        if constant+self.fnum== self.pnum :
+            self.popup = Popup(title="                                             YOU WIN",auto_dismiss=True ,content=winImg(self.i, source='you_win.jpeg',on_press=self.gopickNum), opacity=0.5)
+            #self.popup = Popup(title="YOU WIN", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
             self.popup.open()
 
-        elif 1+self.fnum== self.cnum:
-            self.popup = Popup(title="CPU WINS", content=Button(text='New GAME',on_press=self.gopickNum), opacity=0.5, size_hint=(None, None), size=(200, 200))
+        elif constant+self.fnum== self.cnum:
+            self.popup = Popup(title="CPU WINS", content=winImg(self.i, source='again.jpg',on_press=self.gopickNum), opacity=0.5)
             self.popup.open()
 
     def on_press(self):
@@ -156,8 +196,9 @@ class tourn(ButtonBehavior,Screen):
         self.bl.add_widget(self.dcnum1)
         self.cfin1=Label()
         self.bl.add_widget(self.cfin1)
-        
-        self.popup=None
+        self.popup = Popup(title="    Round One",auto_dismiss=False,content=Button(text='Start', on_press=self.remove), opacity=0.5, size_hint=(None, None), size=(200, 200))
+        self.popup.open()        
+
         self.c23grid=BoxLayout(orientation="horizontal")
         self.bl.add_widget(self.c23grid)
         self.dcnum2=Label(text=str(self.cnum2))
@@ -196,6 +237,8 @@ class tourn(ButtonBehavior,Screen):
         self.pgrid.add_widget(self.p4)
         self.p5=Image(source="5.gif")
         self.pgrid.add_widget(self.p5)
+    def remove(self, instance):
+        self.popup.dismiss()
     def ply(self, constant):
         constant=constant
         if self.round1==True and self.qual1==False and self.qual2==False and self.qual3==False and self.qualp==False :
@@ -339,22 +382,17 @@ class tourn(ButtonBehavior,Screen):
             self.bl.remove_widget(self.pfin)
             self.pfin=Image(source=str(constant)+".gif")
             self.bl.add_widget(self.pfin, index=2)
-
             self.fnum3=random.randint(0,5)
-            self.sum.text=str(self.fnum3+constant)
-            
+            self.sum.text=str(self.fnum3+constant)          
             self.c23grid.remove_widget(self.cfin2)
             self.cfin2=Label(text='Qualified')
             self.c23grid.add_widget(self.cfin2, index=-1)
-
             self.c23grid.remove_widget(self.cfin3)
             self.cfin3=Image(source=str(self.fnum3)+'.gif')
             self.c23grid.add_widget(self.cfin3, index=-3)
-
             self.bl.remove_widget(self.cfin1)
             self.cfin1=Label(text='Qualified')
             self.bl.add_widget(self.cfin1, index=4)
-        
             if int(self.sum.text)== self.pnum :
                 self.round1=False
                 self.round2=True
@@ -472,7 +510,7 @@ class tourn(ButtonBehavior,Screen):
                 self.qual3_2=True
         #Player2 did not qualify phase one
         elif self.round2==True and  self.qual1==True and self.qual2==False and self.qual3==True and self.qualp==True and self.qual1_2==False and self.qual3_2==False  :
-            print('Player2 did not qualify phase one')
+            #print('Player2 did not qualify phase one')
             self.bl.remove_widget(self.pfin)
             self.pfin=Image(source=str(constant)+".gif")
             self.bl.add_widget(self.pfin, index=2)
@@ -513,7 +551,7 @@ class tourn(ButtonBehavior,Screen):
                 self.qual3_2=True
         #Player3 did not qualify phase one
         elif self.round2==True and  self.qual1==True and self.qual2==True and self.qual3==False and self.qualp==True and self.qual2_2==False and self.qual1_2==False  :
-            print('Player3 did not qualify phase one')
+            #print('Player3 did not qualify phase one')
             self.bl.remove_widget(self.pfin)
             self.pfin=Image(source=str(constant)+".gif")
             self.bl.add_widget(self.pfin, index=2)
@@ -931,7 +969,7 @@ class tourn(ButtonBehavior,Screen):
             count=open('count.txt', 'r')
             j=count.read()
             count.close()
-            print(j)
+            #print(j)
             self.parent.parent.parent.add_widget(manager(int(j)))
             try :
                 self.parent.parent.clear_widgets()
@@ -989,16 +1027,18 @@ class pickto(Screen):
         self.clear_widgets()
 
 
-class pickNum(Screen):
-    plnum=NumericProperty(12)
+class pickNum(ButtonBehavior,Screen):
     def __init__(self,i, **kwargs):
         super(pickNum, self).__init__(**kwargs)
+        self.add_widget(CoverImage(source="picknum.jpg"))
+        self.i=i
+        '''
         self.mbox= BoxLayout(orientation='vertical')
         self.add_widget(self.mbox)
         self.mbox.add_widget(Label(text='Pick Your Number'))
         self.mgrid=GridLayout()
         self.mgrid.cols=3
-        self.i=i
+        
         self.btn10=Button(text='10',on_press=self.gotofirst10)
         self.mgrid.add_widget(self.btn10)
         self.btn9=Button(text='9',on_press=self.gotofirst9)
@@ -1024,80 +1064,103 @@ class pickNum(Screen):
         self.mgrid.add_widget(self.btn0)
         self.btnn=Button(text='')
         self.mgrid.add_widget(self.btnn)
+        '''
         self.name='pickNum'+str(i)
-
-    def gotofirst10(self,instance):
+    def gotofirst10(self):
         self.parent.add_widget(pickto(i=self.i, pnum=10))
         self.manager.current='pickto'+str(self.i)
         self.clear_widgets()
-    def gotofirst9(self,instance):
+    def gotofirst9(self):
         self.parent.add_widget(pickto(i=self.i, pnum=9))
         self.manager.current='pickto'+str(self.i)
         self.clear_widgets()
-    def gotofirst8(self,instance):
+    def gotofirst8(self):
         self.parent.add_widget(pickto(i=self.i, pnum=8))
         self.manager.current='pickto'+str(self.i)
         self.clear_widgets()
-    def gotofirst7(self,instance):
+    def gotofirst7(self):
         self.parent.add_widget(pickto(i=self.i, pnum=7))
         self.manager.current='pickto'+str(self.i)
         self.clear_widgets()
-    def gotofirst6(self,instance):
+    def gotofirst6(self):
         self.parent.add_widget(pickto(i=self.i, pnum=6))
         self.manager.current='pickto'+str(self.i)
         self.clear_widgets()
-    def gotofirst5(self,instance):
+    def gotofirst5(self):
         self.parent.add_widget(pickto(i=self.i, pnum=5))
         self.manager.current='pickto'+str(self.i)
         self.clear_widgets()
-    def gotofirst4(self,instance):
+    def gotofirst4(self):
         self.parent.add_widget(pickto(i=self.i, pnum=4))
         self.manager.current='pickto'+str(self.i)
         self.clear_widgets()
-    def gotofirst3(self,instance):
+    def gotofirst3(self):
         self.parent.add_widget(pickto(i=self.i, pnum=3))
         self.manager.current='pickto'+str(self.i)
         self.clear_widgets()
-    def gotofirst2(self,instance):
+    def gotofirst2(self):
         self.parent.add_widget(pickto(i=self.i, pnum=2))
         self.manager.current='pickto'+str(self.i)
         self.clear_widgets()
-    def gotofirst1(self,instance):
+    def gotofirst1(self):
         self.parent.add_widget(pickto(i=self.i, pnum=1))
         self.manager.current='pickto'+str(self.i)
         self.clear_widgets()
-    def gotofirst0(self,instance):
+    def gotofirst0(self):
         self.parent.add_widget(pickto(i=self.i, pnum=0))
         self.manager.current='pickto'+str(self.i)
         self.clear_widgets()
-    def on_plnum(self, instance, plnum):
-        print(plnum)
-        return plnum
     def pikk(self,number):
         number=number
         self.parent.add_widget(pickto(i=self.i, pnum=number))
         self.manager.current='pickto'+str(self.i)
-        self.clear_widgets()    
+        self.clear_widgets()
+    def on_press(self):
+        print(self.last_touch.spos)
+        if 0.035<self.last_touch.spos[0]<0.125 and 0.36<self.last_touch.spos[1]<0.47 :
+            self.gotofirst1()
+        elif 0.26<self.last_touch.spos[0]<0.35 and 0.36<self.last_touch.spos[1]<0.47 :
+            self.gotofirst8()
+        elif 0.46<self.last_touch.spos[0]<0.55 and 0.36<self.last_touch.spos[1]<0.47 :
+            self.gotofirst5()
+        elif 0.69<self.last_touch.spos[0]<0.78 and 0.36<self.last_touch.spos[1]<0.47 :
+            self.gotofirst10()
+        elif 0.85<self.last_touch.spos[0]<1 and 0.36<self.last_touch.spos[1]<0.47 :
+            self.gotofirst3()
+        elif 0.035<self.last_touch.spos[0]<0.125 and 0.17<self.last_touch.spos[1]<0.27 :
+            self.gotofirst4()
+        elif 0.26<self.last_touch.spos[0]<0.35 and 0.17<self.last_touch.spos[1]<0.27 :
+            self.gotofirst2()
+        elif 0.46<self.last_touch.spos[0]<0.55 and 0.17<self.last_touch.spos[1]<0.27 :
+            self.gotofirst7()
+        elif 0.69<self.last_touch.spos[0]<0.78 and 0.17<self.last_touch.spos[1]<0.27 :
+            self.gotofirst9()
+        elif 0.85<self.last_touch.spos[0]<1 and 0.17<self.last_touch.spos[1]<0.27 :
+            self.gotofirst6()
+
+    
 class welcome(Screen):
     def __init__(self, i, **kwargs):
-        super().__init__(**kwargs)
+        super(welcome, self).__init__(**kwargs)
         self.name='welcome'+str(i)
-        self.bind(size=self._update_rect)
+        self.ads = KivMob('ca-app-pub-7708734421318076/7320424307')
+        self.ads.new_banner('ca-app-pub-7708734421318076/7320424307', top_pos=True)
+        self.ads.request_banner()
+        self.ads.show_banner()
         self.i=i
-        self.img=Image(source="cover.jpg", size_hint=(None, None), size=self.size)
-        self.add_widget(self.img)
+        self.add_widget(CoverImage(source="cover.jpeg"))
         self.gd=FloatLayout()
         self.add_widget(self.gd)
-        self.gd.add_widget(Button(text="Play", on_press=self.gopickNum, opacity=0.6, pos_hint={'x':0.5,'y':0.5},size_hint=(0.1,0.1)))
-        self.gd.add_widget(Button(text="Difficulty", on_press=self.difficulty, opacity=0.6, pos_hint={'x':0.5,'y':0.3},size_hint=(0.1,0.1)))
-        self.gd.add_widget(Button(text="About", on_press=self.abt, opacity=0.6, pos_hint={'x':0.5,'y':0.1},size_hint=(0.1,0.1)))
+        self.gd.add_widget(Button(text="Play", on_press=self.gopickNum, opacity=0.6, pos_hint={'x':0.45,'y':0.55},size_hint=(0.1,0.1)))
+        self.gd.add_widget(Button(text="Difficulty", on_press=self.difficulty, opacity=0.6, pos_hint={'x':0.45,'y':0.35},size_hint=(0.1,0.1)))
+        self.gd.add_widget(Button(text="About", on_press=self.abt, opacity=0.6, pos_hint={'x':0.45,'y':0.15},size_hint=(0.1,0.1)))
     def gopickNum(self,instance):
         self.parent.add_widget(pickNum(self.i))
         self.manager.current='pickNum'+str(self.i)
         self.clear_widgets()
-    def _update_rect(self, instance, value):
+    #def _update_rect(self, instance, value):
         #self.rect.pos = instance.pos
-        self.img.size = instance.size
+        #self.img.size = instance.size
 
     def abt(self,instance):
         self.parent.add_widget(about())
@@ -1109,24 +1172,16 @@ class welcome(Screen):
 class about(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.bind(size=self._update_rect, pos=self._update_rect)
         self.name='about'
         self.gd=GridLayout(cols=1)
         self.add_widget(self.gd)
-        file=open('About.txt', 'r')
-        abt=file.read()
-        file.close()
-        self.lbl=Label(text=abt, size_hint=(None, None), size=self.size)
+        self.lbl=CovAbt()
         self.gd.add_widget(self.lbl)
         file=open('count.txt', 'r')
         self.i=int(file.read())
         file.close()
     def on_touch_down(self,touch):
-        #self.parent.add_widget(welcome(self.i))
-        self.manager.current='welcome'+str(self.i)  
-    def _update_rect(self, instance, value):
-        #self.rect.pos = instance.pos
-        self.lbl.size = instance.size
+        self.manager.current='welcome'+str(self.i)
 class difficulty(ButtonBehavior,Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
