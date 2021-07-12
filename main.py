@@ -8,7 +8,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.image import Image
 from kivy.uix.button import ButtonBehavior
 from kivy.uix.behaviors import CoverBehavior
-from kivy.graphics import Color, Rectangle
+from kivy.graphics import Color
 import random
 from kivmob import KivMob
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -85,7 +85,7 @@ class game(ButtonBehavior,Screen):
         self.bl.add_widget(self.pgrid)
         self.pgrid.add_widget(Image(source="0.gif"))
         self.pgrid.add_widget(Image(source="1.gif"))
-        self.pgrid.add_widget(Image(source="2.gif"))
+        self.pgrid.add_widget(Image(source="2cy.png"))
         self.pgrid.add_widget(Image(source="3.gif"))
         self.pgrid.add_widget(Image(source="4.gif"))
         self.pgrid.add_widget(Image(source="5.gif"))
@@ -99,8 +99,7 @@ class game(ButtonBehavior,Screen):
 
         reason=open('constant.txt', 'w')
         reason.write(str(abs(constant-self.pnum)))
-        reason.close() 
-
+        reason.close()
         remember=list(range(6))
         
         try :
@@ -108,11 +107,9 @@ class game(ButtonBehavior,Screen):
             self.fnum=remember[random.randint(0,4)]
         except ValueError :
             self.fnum=random.randint(0,5)
-
         self.bl.remove_widget(self.pfin)
         self.pfin=Image(source=str(constant)+".gif")
-        self.bl.add_widget(self.pfin, index=2)
-        
+        self.bl.add_widget(self.pfin, index=2)        
         #self.fnum=random.randint(0,5)
         self.bl.remove_widget(self.cfin)
         self.cfin=Image(source=str(self.fnum)+'c.gif')
@@ -146,7 +143,6 @@ class game(ButtonBehavior,Screen):
         elif  0< touch[0] <0.12 and 0< touch[1] <0.15 :
             self.press(0)
         
-
     def gopickNum(self,instance):
         count=open('count.txt', 'r')
         j=count.read()
@@ -1065,7 +1061,8 @@ class welcome(Screen):
     def __init__(self, i, **kwargs):
         super(welcome, self).__init__(**kwargs)
         self.name='welcome'+str(i)
-        self.ads = KivMob('ca-app-pub-7708734421318076/7320424307')
+        self.ads = KivMob('ca-app-pub-7708734421318076~2678563608')
+        self.ads.add_test_device("DC7FB264B3E07750BCCFC5EAA779E24E")
         self.ads.new_banner('ca-app-pub-7708734421318076/7320424307', top_pos=True)
         self.ads.request_banner()
         self.ads.show_banner()
@@ -1175,9 +1172,6 @@ class Kivy(App):
         self.icon='icon.png'
   
         return root
-    def _update_rect(self, instance, value):
-        self.rect.pos = instance.pos
-        self.rect.size = instance.size
-
+        
 if __name__ =="__main__":
     Kivy().run()

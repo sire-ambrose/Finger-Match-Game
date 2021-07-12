@@ -1,3 +1,4 @@
+'''
 from kivmob import KivMob, TestIds
 
 from kivy.app import App
@@ -18,3 +19,4 @@ class BannerTest(App):
 
 if __name__ == "__main__":
     BannerTest().run()
+'''
